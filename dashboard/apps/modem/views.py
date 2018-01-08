@@ -10,8 +10,8 @@ from rest_framework import permissions
 from rest_framework import generics
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 #############      My libraries     ##########
-from serializer import MessageSerializer
-from models     import Message
+from .serializer import MessageSerializer
+from .models     import Message
 
 @login_required
 def home(request):

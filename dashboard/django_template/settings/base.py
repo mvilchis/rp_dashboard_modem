@@ -38,10 +38,10 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    'apps'
+    'rest_framework.authtoken'
 ]
-LOCAL_APPS=['apps.userprofile']
+LOCAL_APPS=['apps.userprofile',
+            'apps.modem']
 
 INSTALLED_APPS = DJANGO_APPS+LOCAL_APPS
 
