@@ -13,11 +13,24 @@ from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 from .serializer import MessageSerializer
 from .models     import Message
 
+#############     Auxiliar functions  #############
+def create_dictionary(query):
+    result_dic = {}
+    for item in query:
+        if item.queue in result_dic:
+            result_dic[item.queue].append(item)
+        else:
+            result_dic[item.queue] = [item]
+    return result_dic
+
 @login_required
 def home(request):
     ctx = {
-            'historic': True,
+        'failed': create_dictionary(Message.objects.filter(status="F")),
+        'sent'  : create_dictionary(Message.objects.filter(status="S")),
+        'queued': create_dictionary(Message.objects.filter(status="Q"))
         }
+    print (ctx)
     return render(request, 'home.html',ctx)
 
 class MessageViewSet(ListBulkCreateUpdateDestroyAPIView):
