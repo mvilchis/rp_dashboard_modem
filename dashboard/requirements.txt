@@ -1,0 +1,5 @@
+Django==1.11.2
+unipath
+djangorestframework==3.6.3
+djangorestframework_bulk
+requests==2.11.1
