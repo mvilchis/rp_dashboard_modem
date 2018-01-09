@@ -229,12 +229,12 @@ $(function() {
   }
 
   if ($("#lineChart").length) {
-    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+    /*var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
     var lineChart = new Chart(lineChartCanvas, {
       type: 'line',
       data: data,
       options: options
-    });
+    });*/
   }
 
   if ($("#linechart-multi").length) {

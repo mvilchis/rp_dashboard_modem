@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {%block title%}Star Admin{%endblock%}
+  <link rel="stylesheet" href="/static/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
+  <link rel="stylesheet" href="/static/css/style_db.css" />
+  <link rel="shortcut icon" href="/static/images/favicon.png" />
+</head>
+
+<body class="sidebar-icon-only">
+  <div class=" container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar navbar-default col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+
+        <button class="navbar-toggler navbar-dark navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="col-lg-8 col-12" style="padding-left: 45px;">
+          <ul class="nav" >
+            <li class="col-3">
+              <a class="nav-link">
+              <img class="icon-dashboard" src="/static/images/icons/1.png" alt="">
+              <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="col-3">
+              <a class="nav-link">
+              <img class="icon-dashboard" src="/static/images/icons/2.png" alt="">
+              <span class="menu-title">Queues</span>
+              </a>
+            </li>
+            <li class="col-3">
+              <a class="nav-link" href="#">
+              <img class="icon-dashboard" src="/static/images/icons/10.png" alt="">
+              <span class="menu-title">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- partial -->
+    <div class="container-fluid">
+      {% block panel %}{%endblock%}
+    </div>
+
+  <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/static/node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/static/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/static/node_modules/chart.js/dist/Chart.min.js"></script>
+  <script>
+  {%block script%} {%endblock%}
+  </script>
+</body>
+
+</html>
