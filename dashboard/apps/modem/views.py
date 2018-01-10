@@ -15,7 +15,7 @@ from .serializer import MessageSerializer
 from .models     import Message
 
 #############     Auxiliar functions  #############
-def create_dictionary(query):
+def create_home_dictionary(query):
     tmp_dic = {}
     result_dic = {}
     for item in query:
@@ -36,16 +36,32 @@ def create_dictionary(query):
     result_dic["labels"] = labels
     return result_dic
 
+
+def create_queued_dictionary(query):
+    tmp_dic = {}
+    for item in query:
+        if item.queue in tmp_dic:
+            tmp_dic[item.queue].append(item)
+        else:
+            tmp_dic[item.queue] = [item]
+    return tmp_dic
+
 @login_required
 def home(request):
 
     ctx = {
-        'failed': create_dictionary(Message.objects.filter(status="F")),
-        'sent'  : create_dictionary(Message.objects.filter(status="S")),
-        'queued': create_dictionary(Message.objects.filter(status="Q"))
+        'failed': create_home_dictionary(Message.objects.filter(status="F")),
+        'sent'  : create_home_dictionary(Message.objects.filter(status="S")),
+        'queued': create_home_dictionary(Message.objects.filter(status="Q"))
         }
-    print (ctx)
-    return render(request, 'home.html',ctx)
+    data ={"data":ctx}
+    return render(request, 'home.html',data)
+
+@login_required
+def queues(request):
+    ctx = {'failed': create_queued_dictionary(Message.objects.filter(status="F"))}
+    return render(request, 'queues.html',ctx)
+
 
 class MessageViewSet(ListBulkCreateUpdateDestroyAPIView):
     queryset = Message.objects.all()

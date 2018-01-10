@@ -25,6 +25,8 @@ from apps.modem.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signin/$', userprofile_views.signin),
+    url(r'^accounts/login/', userprofile_views.signin),
     url(r'^home/$', modem_views.home),
+    url(r'^queues/$', modem_views.queues),
     url(r'^add_message/', MessageViewSet.as_view())
 ]

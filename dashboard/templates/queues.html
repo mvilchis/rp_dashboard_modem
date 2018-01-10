@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{% load filter_templates %}
+{%block title%} Dashboard {%endblock%}
+{%block panel%}
+
+{% for queue,value  in failed.items %}
+  {%if forloop.counter|mod:2 == 0 and forloop.counter > 1%}
+    </div>
+  {% endif %}
+  {%if forloop.counter|mod:2 == 0 %}
+  <div class="row mb-2">
+  {% endif %}
+    <div class="col-lg-6 mb-4">
+      <input type="text" id="myInput_{{queue}}" onkeyup="searchFunction({{queue}})" placeholder="Search for names.." title="Type in a name">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-4">Mensajes fallidos slot {{queue}} </h5>
+            <table class="table table-striped" id="myTable_{{queue}}">
+              <thead>
+                <tr class="">
+                  <th></th>
+                  <th>Contacto</th>
+                  <th>Mensaje</th>
+                </tr>
+              </thead>
+              <tbody>
+              {%for message in value %}
+                <tr>
+                  <td></td>
+                  <td> {{message|get_msg_item:"contact"}} </td>
+                  <td>{{message|get_msg_item:"message"}}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  {%endfor%}
+  </div>
+{%endblock%}
+
+{%block script%}
+  function searchFunction(queue_id) {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput_"+queue_id);
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable_"+queue_id);
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+{%endblock%}

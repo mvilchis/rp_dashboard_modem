@@ -9,34 +9,16 @@
             <div class="col-lg-6 col-12 mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-4">Line chart</h5>
-                  <canvas id="lineChart" style="height:250px"></canvas>
+                  <h5 class="card-title mb-4">Mensajes fallidos</h5>
+                  <canvas id="failedChart" style="height:250px"></canvas>
                 </div>
               </div>
             </div>
             <div class="col-lg-6 col-12 mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-4">Bar chart</h5>
-                  <canvas id="barChart" style="height:230px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-12 mb-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-4">Area chart</h5>
-                  <canvas id="areaChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-12 mb-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-4">Doughnut chart</h5>
-                  <canvas id="doughnutChart" style="height:250px"></canvas>
+                  <h5 class="card-title mb-4">Mensajes enviados</h5>
+                  <canvas id="sentChart" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -45,16 +27,8 @@
             <div class="col-lg-6 col-12 mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-4">Pie chart</h5>
-                  <canvas id="pieChart" style="height:250px"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-12 mb-4">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-4">Scatter chart</h5>
-                  <canvas id="scatterChart" style="height:250px"></canvas>
+                  <h5 class="card-title mb-4">Mensajes encolados</h5>
+                  <canvas id="queuedChart" style="height:250px"></canvas>
                 </div>
               </div>
             </div>
@@ -65,37 +39,44 @@
 {%endblock%}
 
 {%block script%}
-  new Chart(document.getElementById("lineChart"), {
-  type: 'line',
-  data: {
-    labels: {{failed|get_item:"labels"|safe}},
-    datasets: [
-      {%for queue in failed%}
-      {%if queue != "labels"%}
-        {
-        data: {{failed|get_item:queue|safe}},
-        label: {{queue}},
-        borderColor: "#3e95cd",
-        fill: false
-      }
-      {%endif%}
-      {%endfor%}
-    ]
-  },
-  options: {
-    responsive: true,
-
-    title: {
-      display: false,
+  var failed = "failed";
+  var sent ="sent";
+  var queued = "queued";
+  {% for k,v in data.items %}
+  new Chart(document.getElementById({{k}}+"Chart"), {
+    type: 'line',
+    data: {
+      labels: {{v|get_item:"labels"|safe}},
+      datasets: [
+        {%for queue in v%}
+        {%if queue != "labels"%}
+          {
+          data: {{v|get_item:queue|safe}},
+          label: {{queue}},
+          borderColor: "#3e95cd",
+          fill: false
+        }
+        {%endif%}
+        {%endfor%}
+      ]
     },
-    tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-    hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-  }
-});
+    options: {
+      responsive: true,
+
+      title: {
+        display: false,
+      },
+      tooltips: {
+                      mode: 'index',
+                      intersect: false,
+                  },
+      hover: {
+                      mode: 'nearest',
+                      intersect: true
+                  },
+    }
+  });
+  {%endfor%}
+
+
 {%endblock%}
