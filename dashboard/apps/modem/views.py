@@ -11,8 +11,10 @@ from rest_framework import permissions
 from rest_framework import generics
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 #############      My libraries     ##########
-from .serializer import MessageSerializer
-from .models     import Message
+from .serializer import MessageSerializer, ContactSerializer
+from .models     import Message, Contact
+
+
 
 #############     Auxiliar functions  #############
 def create_home_dictionary(query):
@@ -62,7 +64,17 @@ def queues(request):
     ctx = {'failed': create_queued_dictionary(Message.objects.filter(status="F"))}
     return render(request, 'queues.html',ctx)
 
+@login_required
+def messages(request):
+    ctx = {'failed': create_queued_dictionary(Message.objects.filter(status="F"))}
+    return render(request, 'messages.html',ctx)
+
 
 class MessageViewSet(ListBulkCreateUpdateDestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+
+
+class ContactViewSet(ListBulkCreateUpdateDestroyAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer

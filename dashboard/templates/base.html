@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   {%block title%}Star Admin{%endblock%}
   <link rel="stylesheet" href="/static/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
+
   <link rel="stylesheet" href="/static/css/style_db.css" />
   <link rel="shortcut icon" href="/static/images/favicon.png" />
 </head>
@@ -35,7 +36,7 @@
               </a>
             </li>
             <li class="col-3">
-              <a class="nav-link" href='/queue'>
+              <a class="nav-link" href='/messages'>
               <img class="icon-dashboard" src="/static/images/icons/3.png" alt="">
               <span class="menu-title" style ="color:black;font-size:12px">Mensajes</span>
               </a>
@@ -61,7 +62,9 @@
   <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/static/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
   <script src="/static/node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script>
+  var QUEUE_COLORS = [ "#20B2AA", 	"#2F4F4F", 	"#008080", 	"#008B8B", 	"#00FFFF", 	"#00FFFF", 	"#E0FFFF", 	"#00CED1", 	"#40E0D0", 	"#48D1CC", 	"#AFEEEE", 	"#7FFFD4", 	"#B0E0E6", 	"#5F9EA0", 	"#4682B4", 	"#6495ED", 	"#00BFFF", 	"#1E90FF", 	"#ADD8E6", 	"#87CEEB", 	"#87CEFA", 	"#191970", 	"#000080", 	"#00008B", 	"#0000CD", 	"#0000FF", 	"#4169E1", 	"#8A2BE2", 	"#4B0082", 	"#483D8B", 	"#6A5ACD",];
   {%block script%} {%endblock%}
   </script>
 </body>

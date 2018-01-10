@@ -27,3 +27,9 @@ class Message(models.Model):
     created_on   = models.DateTimeField(auto_now_add=True, blank=True)
     status       = models.CharField(max_length=3, blank=True, null=True)
     queue        = models.IntegerField()
+
+
+class Contact(models.Model):
+    """ Class to represent a contact """
+    contact      = models.CharField(max_length=250, blank=True, null=True)
+    queue        = models.IntegerField()

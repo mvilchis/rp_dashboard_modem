@@ -53,9 +53,10 @@
           {
           data: {{v|get_item:queue|safe}},
           label: {{queue}},
-          borderColor: "#3e95cd",
+          borderColor: QUEUE_COLORS[{{queue}}],
+          backgroundColor: QUEUE_COLORS[{{queue}}],
           fill: false
-        }
+        },
         {%endif%}
         {%endfor%}
       ]

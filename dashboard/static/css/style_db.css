@@ -8235,7 +8235,9 @@ pre {
     vertical-align: bottom;
     border-bottom: 2px solid #e9ecef; }
   .table tbody + tbody {
-    border-top: 2px solid #e9ecef; }
+    border-top: 2px solid #e9ecef;
+    overflow-y:auto;
+ }
   .table .table {
     background-color: #fff; }
 
@@ -8371,6 +8373,7 @@ pre {
   .table-inverse th,
   .table-inverse td,
   .table-inverse thead th {
+
     border-color: #32383e; }
   .table-inverse.table-bordered {
     border: 0; }

@@ -28,5 +28,7 @@ urlpatterns = [
     url(r'^accounts/login/', userprofile_views.signin),
     url(r'^home/$', modem_views.home),
     url(r'^queues/$', modem_views.queues),
-    url(r'^add_message/', MessageViewSet.as_view())
+    url(r'^messages/$', modem_views.messages),
+    url(r'^add_message/', MessageViewSet.as_view()),
+    url(r'^add_contact/', ContactViewSet.as_view()),
 ]
