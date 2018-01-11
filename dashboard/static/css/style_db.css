@@ -13674,7 +13674,7 @@ pre {
       width: 100%; } }
 
 .navbar.fixed-top + .container-fluid {
-  padding-top: 3.5rem; }
+  padding-top: 7.5rem; }
 
 @media (min-width: 992px) {
   .sidebar-icon-only .navbar .navbar-brand-wrapper {

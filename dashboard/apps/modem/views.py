@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template.context import RequestContext
 from collections import defaultdict, Counter
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 #############   REST Libraries      ##########
@@ -105,9 +106,36 @@ def queues(request):
 
 @login_required
 def messages(request):
+    messages = Message.objects.filter(Q(status = MSG_FAILED) | Q(status = MSG_SENT))
+    ############# Error rate
+    error_dic = {}
+    change_dic = {}
+    for message in messages:
+        key_1 = message.contact.contact
+        key_2 = "sent" if message.status == MSG_SENT else "failed"
+        key_change = "own" if message.queue.number == message.contact.queue.number else "other"
+        if not key_1 in error_dic:
+            error_dic[key_1] = {"sent":0, "failed":0, "queue": message.contact.queue.number}
+            change_dic[key_1] = {"own": 0, "other":0,"queue": message.contact.queue.number }
+        error_dic[key_1][key_2] += 1
+        change_dic[key_1][key_change] +=1
 
-    ctx = {'failed': create_queued_dictionary(Message.objects.filter(status=MSG_FAILED))}
+    error_tmp_dic = {}
+    change_tmp_dic = {}
+    for key_1 in error_dic.keys():
+        error_tmp_dic[key_1] = (error_dic[key_1]["failed"] *100.0)/(error_dic[key_1]["failed"] + error_dic[key_1]["sent"])
+        change_tmp_dic[key_1] = (change_dic[key_1]["other"] *100.0)/(change_dic[key_1]["other"]+change_dic[key_1]["own"])
+
+    error_sorted =sorted(error_tmp_dic, key=error_tmp_dic.get, reverse=True)[:100]
+    change_sorted = sorted(change_tmp_dic, key=change_tmp_dic.get, reverse=True)[:100]
+
+
+    ctx = {'contacts': [{key_1:error_dic[key_1]} for key_1 in error_sorted],
+            'changes':  [{key_1:change_dic[key_1]} for key_1 in change_sorted]}
     return render(request, 'messages.html',ctx)
+
+
+
 
 @login_required
 def contacts(request):
@@ -144,6 +172,7 @@ def contacts(request):
 
 
 
+
 @login_required
 def contact_moved(request):
     contacts = Contact.objects.filter(status = CONTACT_CHANGE)
@@ -152,6 +181,19 @@ def contact_moved(request):
         contact.status = CONTACT_NORMAL
         contact.save()
     return JsonResponse(to_json,safe=False)
+
+@login_required
+def ping(request):
+    msg_success=""
+    msg_fail =""
+    if request.method == "POST":
+        celnumber = request.POST["celnumber"]
+        if not celnumber or not celnumber.isdigit():
+            msg_fail ="No se pudo mandar el mensaje"
+        else:
+            msg_success="En breve se procedera tu solicitud"
+    ctx = {"msg_success":msg_success, "msg_fail":msg_fail}
+    return render(request, 'ping.html', ctx)
 
 ###############    REST API    ################
 

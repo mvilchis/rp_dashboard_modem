@@ -15,3 +15,7 @@ def get_item(number, mod):
 @register.filter(name='get_msg_item')
 def get_item(message, item):
     return getattr(message, item)
+
+@register.filter(name ="key")
+def key_ (dictionary):
+    return dictionary.keys()#[0]

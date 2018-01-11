@@ -2,4 +2,86 @@
 {% load filter_templates %}
 {%block title%} Dashboard {%endblock%}
 {%block panel%}
+
+<div class="col-lg-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-2">
+        <div class="col-12" >
+        <h5 class="card-title mb-4">Top de contactos con mayor mensajes fallados</h5>
+        </div>
+    </div>
+    <table class="table table-striped" id ="rateTable">
+          <thead>
+            <tr class="">
+              <th>Contacto</th>
+              <th>Mesajes con error</th>
+              <th>Mesajes enviados</th>
+              <th> Slot del contacto </th>
+            </tr>
+          </thead>
+          <tbody>
+          {%for contact in contacts %}
+            <tr>
+              {% for key,value in contact.items%}
+              <td> {{key}} </td>
+              <td>{{value|get_item:"failed"}}</td>
+              <td>{{value|get_item:"sent"}}</td>
+              <td> {{value|get_item:"queue"}}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+          <div class="col-12" >
+          <h5 class="card-title mb-4">Top de contactos que recibieron mensajes por otro canal</h5>
+          </div>
+      </div>
+      <table class="table table-striped" id ="myTable">
+            <thead>
+              <tr class="">
+                <th>Contacto</th>
+                <th>Mensajes recibidos en otro slot</th>
+                <th>Mesajes recibidos en su slot</th>
+                <th> Slot del contacto </th>
+              </tr>
+            </thead>
+            <tbody>
+            {%for change in changes  %}
+              <tr>
+                {% for key,value in change.items%}
+                <td> {{key}} </td>
+                <td>{{value|get_item:"other"}}</td>
+                <td>{{value|get_item:"own"}}</td>
+                <td> {{value|get_item:"queue"}}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+{%endblock%}
+
+{%block script%}
+$(document).ready(function() {
+    $('#rateTable').DataTable( {
+        "scrollY":        "200px",
+        "scrollCollapse": true,
+        "searching": false,
+        "paging":         false
+    } );
+} );
+
 {%endblock%}

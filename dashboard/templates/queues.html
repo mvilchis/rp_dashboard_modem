@@ -26,22 +26,26 @@
         <div class="card">
           <div class="card-body">
             <div class="row mb-2">
-            <div class="col-5" >
-            <h5 class="card-title mb-4">Mensajes fallidos slot {{queue}} </h5>
+              <div class="col-5" >
+                <h5 class="card-title mb-4">Mensajes fallidos slot {{queue}} </h5>
+              </div>
+              <div class="col-7">
+                <input type="text" id="myInput_{{queue}}" onkeyup="searchFunction({{queue}})" placeholder="Busca contenido" title="Type in a name">
+              </div>
             </div>
-            <div class="col-7">
-            <input type="text" id="myInput_{{queue}}" onkeyup="searchFunction({{queue}})" placeholder="Busca contenido" title="Type in a name">
-          </div>
-        </div>
-        <div class="row mb-2">
-          <input type="submit" name="btnMove" id="btnMove" class="btn-verde" value="Reenviar por:">
-          <select  name="queue_{{queue}}">
-                <option value="empty">----</option>
-                {%for item in queues%}
-                <option value={{item|get_item:"number"}}> {{item|get_item:"number"}} </option>
-                {% endfor%}
-          </select>
-          <input type="submit" name="btnDelete" class="btn-verde" value="Borrar">
+            <div class="row mb-2">
+              <div class="col-8" >
+                <input type="submit" name="btnMove" id="btnMove" class="btn btn-info mr-2" value="Reenviar por:">
+                <select  name="queue_{{queue}}" class="form-control" style="width:70px;display:initial">
+                  <option value="empty">----</option>
+                  {%for item in queues%}
+                    <option value={{item|get_item:"number"}}> {{item|get_item:"number"}} </option>
+                  {% endfor%}
+                </select>
+              </div>
+              <div class ="col-4">
+              <input type="submit" name="btnDelete" class="btn btn-outline-danger" value="Borrar">
+            </div>
         </div>
             <table class="table table-striped" id="myTable_{{queue}}">
               <thead>

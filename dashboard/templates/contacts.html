@@ -28,16 +28,16 @@
         <div class="card">
           <div class="card-body">
             <div class="row mb-2">
-            <div class="col-5" >
+            <div class="col-6" >
             <h5 class="card-title mb-4">Contactos asignados al slot {{queue}} </h5>
             </div>
-            <div class="col-7">
+            <div class="col-6">
             <input type="text" id="myInput_{{queue}}" onkeyup="searchFunction({{queue}})" placeholder="Busca contenido" title="Type in a name">
           </div>
         </div>
         <div class="row mb-2">
-          <input type="submit" name="btnMove" id="btnMove" class="btn-verde" value="Asignar slot:">
-          <select  name="queue_{{queue}}">
+          <input type="submit" name="btnMove" id="btnMove" class="btn btn-info mr-2" value="Asignar slot:">
+          <select  name="queue_{{queue}}" class="form-control" style="width:70px;display:initial">
                 <option value="empty">----</option>
                 {%for item in queues%}
                 <option value={{item|get_item:"number"}}> {{item|get_item:"number"}} </option>
