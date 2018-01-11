@@ -1,6 +1,8 @@
 {% extends 'base.html'%}
 {% load filter_templates %}
 {%block title%} Dashboard {%endblock%}
+
+
 {%block panel%}
 {%if msg_fail%}
 <div class="alert alert-danger">
@@ -27,21 +29,20 @@
           <div class="card-body">
             <div class="row mb-2">
             <div class="col-5" >
-            <h5 class="card-title mb-4">Mensajes fallidos slot {{queue}} </h5>
+            <h5 class="card-title mb-4">Contactos asignados al slot {{queue}} </h5>
             </div>
             <div class="col-7">
             <input type="text" id="myInput_{{queue}}" onkeyup="searchFunction({{queue}})" placeholder="Busca contenido" title="Type in a name">
           </div>
         </div>
         <div class="row mb-2">
-          <input type="submit" name="btnMove" id="btnMove" class="btn-verde" value="Reenviar por:">
+          <input type="submit" name="btnMove" id="btnMove" class="btn-verde" value="Asignar slot:">
           <select  name="queue_{{queue}}">
                 <option value="empty">----</option>
                 {%for item in queues%}
                 <option value={{item|get_item:"number"}}> {{item|get_item:"number"}} </option>
                 {% endfor%}
           </select>
-          <input type="submit" name="btnDelete" class="btn-verde" value="Borrar">
         </div>
             <table class="table table-striped" id="myTable_{{queue}}">
               <thead>
@@ -51,18 +52,16 @@
                     var tmp=document.getElementsByName('selected_{{queue}}').item(c); if (!isHidden(tmp.parentElement.parentElement.parentElement))tmp.checked = this.checked}">
                   </th>
                   <th>Contacto</th>
-                  <th>Mensaje</th>
                 </tr>
               </thead>
               <tbody>
-              {%for message in value %}
+              {%for contact in value %}
                 <tr>
                   <td> <div class="checkbox">
-                          <input type="checkbox" name="selected_{{queue}}" class = "normal"  value="{{message.id}}">
+                          <input type="checkbox" name="selected_{{queue}}" class = "normal"  value="{{contact.id}}">
                       </div>
                   </td>
-                  <td> {{message.contact.contact}} </td>
-                  <td>{{message.message}}</td>
+                  <td> {{contact|get_msg_item:"contact"}} </td>
                 </tr>
               {% endfor %}
               </tbody>

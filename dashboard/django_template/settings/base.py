@@ -61,8 +61,8 @@ ROOT_URLCONF = 'django_template.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR.child('templates')],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR.child('templates'), BASE_DIR.child('apps')+'userprofile/templates'],
+        #'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -70,13 +70,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-        
+        'loaders': ['django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',]
         },
     },
 ]
-TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.load_template_source',
-)
+
+#TEMPLATE_LOADERS = (
+#    'django.template.loaders.app_directories.load_template_source',
+#)
+
 WSGI_APPLICATION = 'django_template.wsgi.application'
 
 

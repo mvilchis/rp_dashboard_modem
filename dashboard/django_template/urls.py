@@ -26,9 +26,15 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signin/$', userprofile_views.signin),
     url(r'^accounts/login/', userprofile_views.signin),
-    url(r'^home/$', modem_views.home),
+    url(r'^home/', modem_views.home),
     url(r'^queues/$', modem_views.queues),
     url(r'^messages/$', modem_views.messages),
+    url(r'^contacts/$', modem_views.contacts),
+    ##### Urls to use with modem
     url(r'^add_message/', MessageViewSet.as_view()),
+    url(r'^add_message/(?P<status>.)/', MessageViewSet.as_view()),
     url(r'^add_contact/', ContactViewSet.as_view()),
+    url(r'^add_queue/', MessageQueueViewSet.as_view()),
+    url(r'^move_contact/', modem_views.contact_moved)
+
 ]
