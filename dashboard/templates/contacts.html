@@ -52,6 +52,7 @@
                     var tmp=document.getElementsByName('selected_{{queue}}').item(c); if (!isHidden(tmp.parentElement.parentElement.parentElement))tmp.checked = this.checked}">
                   </th>
                   <th>Contacto</th>
+                  <th>Prospera</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,6 +63,7 @@
                       </div>
                   </td>
                   <td> {{contact|get_msg_item:"contact"}} </td>
+                  <td> {{contact|get_msg_item:"is_prospera"}} </td>
                 </tr>
               {% endfor %}
               </tbody>
@@ -85,12 +87,12 @@ $(document).ready(function() {
     } );
   {%endfor%}
 } );
-function isHidden(el) {
+  function isHidden(el) {
     var style = window.getComputedStyle(el);
 
     console.log((style.display === 'none'));
     return ((style.display === 'none') || (style.visibility === 'hidden'))
-}
+  }
 
   function searchFunction(queue_id) {
     var input, filter, table, tr, td, i;
@@ -99,12 +101,17 @@ function isHidden(el) {
     table = document.getElementById("myTable_"+queue_id);
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      td_contact = tr[i].getElementsByTagName("td")[1];
+      td_prospera = tr[i].getElementsByTagName("td")[2];
+      if (td_contact) {
+        if (td_contact.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
         } else {
-          tr[i].style.display = "none";
+          if (td_prospera.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          }else {
+            tr[i].style.display = "none";
+          }
         }
       }
     }

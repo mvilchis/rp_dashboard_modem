@@ -17,7 +17,8 @@
               <th>Contacto</th>
               <th>Mesajes con error</th>
               <th>Mesajes enviados</th>
-              <th> Slot del contacto </th>
+              <th>Slot del contacto </th>
+              <th>Contacto prospera </th>
             </tr>
           </thead>
           <tbody>
@@ -28,6 +29,7 @@
               <td>{{value|get_item:"failed"}}</td>
               <td>{{value|get_item:"sent"}}</td>
               <td> {{value|get_item:"queue"}}</td>
+              <td> {{value|get_item:"is_prospera"}}</td>
               {% endfor %}
             </tr>
           {% endfor %}

@@ -35,7 +35,12 @@ class Contact(models.Model):
     """ Class to represent a contact """
     contact      = models.CharField(max_length=250, blank=True, null=True)
     queue        = models.ForeignKey(MessageQueue)
-    status       = models.CharField(max_length = 3, blank=True, null=True, choices =CONTACT_STATUS)
+    status       = models.CharField(max_length = 3,
+                                    blank=True,
+                                    null=True,
+                                    choices =CONTACT_STATUS,
+                                    default=CONTACT_NORMAL)
+    is_prospera  = models.BooleanField(default = False)
 
 class Message(models.Model):
     """ Class to represent a message from modem gsm

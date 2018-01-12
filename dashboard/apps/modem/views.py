@@ -20,7 +20,7 @@ from .models     import Message, Contact, MessageQueue
 from .models     import (MSG_SENT, MSG_FAILED, MSG_RESEND, MSG_ARCHIVED, MSG_QUEUED,
                         CONTACT_CHANGE, CONTACT_NORMAL)
 
-
+LIST_CONTACTS_PING = []
 
 #############     Auxiliar functions  #############
 def create_home_dictionary(query):
@@ -115,8 +115,12 @@ def messages(request):
         key_2 = "sent" if message.status == MSG_SENT else "failed"
         key_change = "own" if message.queue.number == message.contact.queue.number else "other"
         if not key_1 in error_dic:
-            error_dic[key_1] = {"sent":0, "failed":0, "queue": message.contact.queue.number}
-            change_dic[key_1] = {"own": 0, "other":0,"queue": message.contact.queue.number }
+            error_dic[key_1] = {"sent":0, "failed":0,
+                                "queue": message.contact.queue.number,
+                                "is_prospera": message.contact.is_prospera}
+            change_dic[key_1] = {"own": 0, "other":0,
+                                "queue": message.contact.queue.number,
+                                "is_prospera": message.contact.is_prospera }
         error_dic[key_1][key_2] += 1
         change_dic[key_1][key_change] +=1
 
@@ -133,7 +137,6 @@ def messages(request):
     ctx = {'contacts': [{key_1:error_dic[key_1]} for key_1 in error_sorted],
             'changes':  [{key_1:change_dic[key_1]} for key_1 in change_sorted]}
     return render(request, 'messages.html',ctx)
-
 
 
 
@@ -182,6 +185,9 @@ def contact_moved(request):
         contact.save()
     return JsonResponse(to_json,safe=False)
 
+
+
+
 @login_required
 def ping(request):
     msg_success=""
@@ -192,8 +198,17 @@ def ping(request):
             msg_fail ="No se pudo mandar el mensaje"
         else:
             msg_success="En breve se procedera tu solicitud"
+            LIST_CONTACTS_PING.append(celnumber)
     ctx = {"msg_success":msg_success, "msg_fail":msg_fail}
     return render(request, 'ping.html', ctx)
+
+
+
+
+@login_required
+def show_ping(request):
+    ctx = {"numbers": LIST_CONTACTS_PING}
+    return JsonResponse(ctx)
 
 ###############    REST API    ################
 
@@ -202,9 +217,11 @@ class MessageViewSet(ListBulkCreateUpdateDestroyAPIView):
     serializer_class = MessageSerializer
 
     def get_queryset(self):
-        status = self.kwargs['status']
-        print(status)
-        queryset = Message.objects.filter(status = status)
+        if 'status' in self.kwargs:
+            status = self.kwargs['status']
+            queryset = Message.objects.filter(status = status)
+        else:
+            queryset = Message.objects.all()
         return queryset
 
 

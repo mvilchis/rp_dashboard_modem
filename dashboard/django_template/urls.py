@@ -32,9 +32,10 @@ urlpatterns = [
     url(r'^messages/$', modem_views.messages),
     url(r'^contacts/$', modem_views.contacts),
     url(r'^ping/$', modem_views.ping),
+    url(r'^show_ping/$', modem_views.show_ping),
     ##### Urls to use with modem
+    url(r'^add_message/(?P<status>.+)/', MessageViewSet.as_view()),
     url(r'^add_message/', MessageViewSet.as_view()),
-    url(r'^add_message/(?P<status>.)/', MessageViewSet.as_view()),
     url(r'^add_contact/', ContactViewSet.as_view()),
     url(r'^add_queue/', MessageQueueViewSet.as_view()),
     url(r'^move_contact/', modem_views.contact_moved)
