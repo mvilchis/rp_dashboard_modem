@@ -25,7 +25,7 @@ SECRET_KEY = 'hay#_r28ib*thw@=%-^4%y6wc)+a+9vfmha%r)cu@@*sja5)h2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -136,5 +136,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/dashboard_modem/static/'
 STATICFILES_DIRS = [BASE_DIR.child('static')]
